@@ -1,0 +1,78 @@
+{% extends 'base.html.twig' %}
+{% set active_link = 'products' %}
+
+{% block title %}{{ category.name }} - Our Store{% endblock %}
+
+{% block body %}
+    <!-- Breadcrumb -->
+    <div class="container mt-4">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ path('app_home') }}" class="text-decoration-none">Home</a></li>
+                <li class="breadcrumb-item"><a href="#" class="text-decoration-none">Categories</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{{ category.name }}</li>
+            </ol>
+        </nav>
+    </div>
+
+    <!-- Jumbotron -->
+    <div class="container my-4">
+        <div class="p-5 mb-4 bg-primary bg-gradient text-white rounded-3">
+            <div class="container-fluid py-3">
+                <h1 class="display-4 fw-bold">{{ category.name }}</h1>
+                <p class="col-md-8 fs-5">Discover amazing products in the {{ category.name }} category.</p>
+                <span class="badge bg-light text-dark fs-6">{{ products|length }} Products Available</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Products by Category -->
+    <div class="container mb-5">
+        <div class="row mb-4">
+            <div class="col">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h3>Browse {{ category.name }}</h3>
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-outline-secondary active">Grid</button>
+                        <button type="button" class="btn btn-outline-secondary">List</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% if products|length > 0 %}
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            {% for product in products %}
+            <div class="col">
+                <div class="card h-100">
+                    <img src="{{ asset('images/mouse.png') }}" class="card-img-top" alt="{{ product.name }}">
+                    <div class="card-body">
+                        <span class="badge {{ category.badgeClass }} mb-2">{{ category.name }}</span>
+                        <h5 class="card-title">{{ product.name }}</h5>
+                        <p class="card-text fw-bold text-success">${{ product.price }}</p>
+                        <a href="{{ path('app_product_details', {'id': product.id}) }}" class="btn btn-outline-primary">View Details</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+            <p class="text-muted">No products available in this category.</p>
+        {% endif %}
+
+        <!-- Pagination -->
+        <nav aria-label="Product pagination" class="mt-5">
+            <ul class="pagination justify-content-center">
+                <li class="page-item disabled">
+                    <a class="page-link" href="#" tabindex="-1">Previous</a>
+                </li>
+                <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item">
+                    <a class="page-link" href="#">Next</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+{% endblock %}
