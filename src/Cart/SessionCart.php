@@ -45,8 +45,6 @@ class SessionCart implements CartInterface
 
     public function getItems(): array
     {
-        // This method returns CartItem[], but we need the Product repository to hydrate them
-        // For now, we'll return the raw items and let the handler deal with hydration
         return $this->getRawItems();
     }
 
@@ -63,7 +61,6 @@ class SessionCart implements CartInterface
 
     public function getTotalPrice(): float
     {
-        // Requires product data, handled by CartHandler
         return 0.0;
     }
 
